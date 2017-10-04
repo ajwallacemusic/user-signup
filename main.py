@@ -27,6 +27,8 @@ def welcome():
         usernameerror = "Not a valid username Username. must be more than 3 characters long, less than 20 characters long, and not contain spaces."
         errornames.append("usernameerror")
         errors.append(usernameerror)
+    else:
+        redirect_url += "username=" + username + "&"
     if not password:
         passworderror = "Please enter a password."
         errornames.append("passworderror")
@@ -39,13 +41,16 @@ def welcome():
         verify_pass_error = "Passwords don't match."
         errornames.append("verify_pass_error")
         errors.append(verify_pass_error)
-    if " " in email or "@" not in email or "." not in email:
-        emailerror = "Not a valid email."
-        errornames.append("emailerror")
-        errors.append(emailerror)
+    if email:
+        if " " in email or "@" not in email or "." not in email:
+            emailerror = "Not a valid email."
+            errornames.append("emailerror")
+            errors.append(emailerror)
+        else:
+            redirect_url += "email=" + email + "&"
     
     if len(errornames) == 0:
-        return render_template('welcome.html', username=username, password=password, email=email)
+        return render_template('welcome.html', title="Welcome!", username=username, password=password, email=email)
     else:
         for i in range(len(errornames)):
             redirect_url += errornames[i] + "=" + errors[i] + "&"
@@ -61,7 +66,9 @@ def index():
     password_error = request.args.get("passworderror")
     verify_pass_error = request.args.get("verify_pass_error")
     email_error = request.args.get("emailerror")
-    return render_template('signup.html', title='User Signup', usernameerror=usernameerror, password_error=password_error, verify_pass_error=verify_pass_error, email_error=email_error)
+    username = request.args.get("username")
+    email = request.args.get("email")
+    return render_template('signup.html', title='User Signup', username=username, email=email, usernameerror=usernameerror, password_error=password_error, verify_pass_error=verify_pass_error, email_error=email_error)
 
 
 #run app

@@ -2,12 +2,18 @@
 
 {% block content %}
 <h1>User Signup</h1>
+<div class="signup-form">
 <form action="/welcome" method="post">
     <table>
         <tbody>
         <tr>
             <td><label for="username">Username</label></td>
-            <td><input type="text" name="username" value="">
+            <td>
+                {% if username %}
+                <input class="input" type="text" name="username" value="{{ username }}">
+                {% else %}
+                <input class="input" type="text" name="username" value="">
+                {% endif %}
             {% if usernameerror %}
             <span class="error">{{ usernameerror }}</span>
             {% endif %}
@@ -15,7 +21,7 @@
         </tr>
         <tr>       
             <td><label for="password">Password</label></td>
-            <td><input type="password" name="password" value="">
+            <td><input class="input" type="password" name="password" value="">
             {% if password_error %}
             <span class="error">{{ password_error }}</span>
             {% endif %}
@@ -23,7 +29,7 @@
         <tr> 
         </tr>       
             <td><label for="verify-password">Verify Password</label></td>
-            <td><input type="password" name="verify-password" value="">
+            <td><input class="input" type="password" name="verify-password" value="">
             {% if verify_pass_error %}
             <span class="error">{{ verify_pass_error }}</span>
             {% endif %}
@@ -31,7 +37,12 @@
         </tr>
         <tr>        
             <td><label for="email">Email (optional)</label></td>
-            <td><input type="text" name="email" value="">
+            <td> 
+            {% if email %}
+            <input class="input" type="text" name="email" value="{{ email }}">
+            {% else %}
+            <input class="input" type="text" name="email" value="">
+            {% endif %}
             {% if email_error %}
             <span class="error">{{ email_error }}</span></td>
             {% endif %}
@@ -39,6 +50,6 @@
     </tbody>
     </table>
     <input type="submit">
-    
 </form>
+</div>
 {% endblock %}
